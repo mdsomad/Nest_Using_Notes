@@ -1,18 +1,24 @@
-import { Controller, Get, HostParam, Ip } from '@nestjs/common';
+import { Controller, Inject, Optional } from '@nestjs/common';
+import { UsersStore } from './store/users.store';
 
-@Controller('users') //* <-- Iska naam hai decorator
-//* @Controller({path:'/users',host: 'app:domain.com'})               //* <-- Iska naam hai decorator
+@Controller('/users') //* <-- Iska naam hai decorator             //* <-- Iska naam hai decorator
 export class Usercontroller {
-  //TODO Get Methods Used Find ip
-  @Get()
-  getUsers(@Ip() ip: string) {
-    console.log(ip);
-    return { message: 'hello world', Get_IP_Address: ip };
+  constructor(private store: UsersStore) {
+    console.log(this.store);
   }
 
-  //TODO Get Methods Used  Find domain
-  @Get()
-  getUsers2(@HostParam('domain') params: Record<string, any>) {
-    return 'hello world 2';
-  }
+  // constructor(@Inject('STORE') private store: UsersStore) {
+  //   console.log(this.store);
+  // }
+  //   constructor(@Optional() private store: UsersStore) {
+  //     console.log(this.store);
+  //   }
+
+  //   constructor(@Inject(UsersStore) private store: UsersStore) {
+  //     console.log(this.store);
+  //   }
+
+  //   constructor(private store: UsersStore) {
+  //     console.log(this.store);
+  //   }
 }
